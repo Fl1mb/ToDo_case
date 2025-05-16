@@ -313,9 +313,16 @@ void MainWindow::setupUI()
     leftLayout->addWidget(foldersView.get());
     leftLayout->addWidget(newFolderBtn);
 
+    // Add Crash button
+    QPushButton* crashBtn = new QPushButton("Crash");
+    crashBtn->setStyleSheet("background-color: #ff4444; color: white;");
+    QObject::connect(crashBtn, &QPushButton::clicked, this, [&]() {
+        this->client->sendRequest("GET", "/crash");
+    });
     //Правая панель - задачи
     QWidget* rightPanel = new QWidget();
     QVBoxLayout* rightLayout = new QVBoxLayout(rightPanel);
+
 
     tasksList = std::make_unique<QListWidget>(todoWidget.get());
     tasksList->setItemDelegate(new TaskItemDelegate(tasksList.get()));
@@ -343,6 +350,7 @@ void MainWindow::setupUI()
 
     rightLayout->addWidget(tasksList.get());
     rightLayout->addWidget(newTaskBtn);
+    rightLayout->addWidget(crashBtn);
 
     //Разделитель
     QSplitter* splitter = new QSplitter(Qt::Horizontal);

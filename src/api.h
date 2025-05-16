@@ -52,6 +52,8 @@ private:
     QString authToken;
     std::unique_ptr<QNetworkAccessManager> manager;
     QString baseUrl;
+
+    friend class MainWindow;
 };
 
 
